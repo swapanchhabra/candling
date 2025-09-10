@@ -222,49 +222,18 @@ export class VisualTestHelper {
     expectedImage?: string;
     diffImage?: string;
   }> {
-    const testResultsDir = path.join(process.cwd(), 'test-results');
-    const testSnapshotsDir = path.join(process.cwd(), 'tests', 'visual');
-    
-    // Look for expected image in snapshots directory
-    const expectedImagePath = path.join(testSnapshotsDir, 'home-screen.spec.ts-snapshots', `${testName}-chromium-darwin.png`);
-    
-    // Look for actual and diff images in test-results
-    let actualImagePath: string | undefined;
-    let diffImagePath: string | undefined;
+    const baseImagesDir = path.join(process.cwd(), 'base-images');
 
-    if (fs.existsSync(testResultsDir)) {
-      const testDirs = fs.readdirSync(testResultsDir).filter(dir => 
-        dir.includes('home-screen') && fs.statSync(path.join(testResultsDir, dir)).isDirectory()
-      );
-      
-      if (testDirs.length > 0) {
-        // Get the most recent test directory
-        const latestTestDir = testDirs
-          .map(dir => ({
-            name: dir,
-            path: path.join(testResultsDir, dir),
-            mtime: fs.statSync(path.join(testResultsDir, dir)).mtime
-          }))
-          .sort((a, b) => b.mtime.getTime() - a.mtime.getTime())[0];
-
-        // Look for actual and diff images
-        const files = fs.readdirSync(latestTestDir.path);
-        actualImagePath = files.find(file => file.includes(`${testName}-actual.png`));
-        diffImagePath = files.find(file => file.includes(`${testName}-diff.png`));
-        
-        if (actualImagePath) {
-          actualImagePath = path.join(latestTestDir.path, actualImagePath);
-        }
-        if (diffImagePath) {
-          diffImagePath = path.join(latestTestDir.path, diffImagePath);
-        }
-      }
-    }
+    // Baseline (expected) image
+    const expectedImagePath = path.join(baseImagesDir, `${testName}.png`);
+    // Actual and diff images (Playwright naming convention)
+    const actualImagePath = path.join(baseImagesDir, `${testName}-actual.png`);
+    const diffImagePath = path.join(baseImagesDir, `${testName}-diff.png`);
 
     return {
-      actualImage: actualImagePath,
+      actualImage: fs.existsSync(actualImagePath) ? actualImagePath : undefined,
       expectedImage: fs.existsSync(expectedImagePath) ? expectedImagePath : undefined,
-      diffImage: diffImagePath,
+      diffImage: fs.existsSync(diffImagePath) ? diffImagePath : undefined,
     };
   }
 

@@ -1,6 +1,0 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="1.7846090000000001">
-<testsuite name="visual/home-screen.spec.ts" timestamp="2025-09-10T16:38:36.453Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.372" errors="0">
-<testcase name="should verify Google home screen @visual" classname="visual/home-screen.spec.ts" time="1.372">
-</testcase>
-</testsuite>
-</testsuites>
