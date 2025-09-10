@@ -1,0 +1,28 @@
+{
+  "name": "bifrost-visual-testing",
+  "version": "1.0.0",
+  "description": "Visual testing framework using Playwright and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:update-snapshots": "npx playwright test --update-snapshots",
+    "report": "npx playwright show-report",
+    "install:browsers": "npx playwright install chromium",
+    "demo:ai": "node demo-ai-integration.js"
+  },
+  "keywords": [
+    "playwright",
+    "visual-testing",
+    "typescript",
+    "e2e",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "openai": "^4.20.0",
+    "typescript": "^5.0.0"
+  }
+}
